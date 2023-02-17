@@ -1,14 +1,18 @@
 ﻿Module Defaults
+
+    ' Defaults
+    Dim IniFile1 As String = AppRoot & "\" & AppName & ".ini"
+    Dim IniFile2 As String = AppRoot & "\Data\" & AppName & ".ini"
+    Public IniFile As String
+
     Sub ReadDefaults()
         Dim ReadFile
 
         If My.Computer.FileSystem.FileExists(IniFile1) Then
-            WriteInfo("Read Defaults " & IniFile1)
-            ReadFile = My.Computer.FileSystem.OpenTextFileReader(IniFile1)
+            IniFile = IniFile1
 
         ElseIf My.Computer.FileSystem.FileExists(IniFile2) Then
-            WriteInfo("Read Defaults " & IniFile2)
-            ReadFile = My.Computer.FileSystem.OpenTextFileReader(IniFile2)
+            IniFile = IniFile2
 
         Else
             WriteInfo("Failed to read:")
@@ -17,6 +21,9 @@
             CreateIniFile()
             Exit Sub
         End If
+
+        WriteInfo("Read Defaults " & IniFile)
+        ReadFile = My.Computer.FileSystem.OpenTextFileReader(IniFile)
 
         Dim Line As String
         Dim Group As String = ""

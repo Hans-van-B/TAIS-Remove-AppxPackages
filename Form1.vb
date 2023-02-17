@@ -15,21 +15,27 @@ Public Class Form1
         Read_Command_Line_Arg()
         Me.Text = AppName & " V" & AppVer
 
-        Timer1.Interval = 1000
-        Timer1.Start()
+        If InstallMode Then
+            xtrace_i("InstallGui")
+            SplitContainer1.Visible = False
+            Me.Width = 500
+            Me.Height = 300
+            Timer1.Interval = 1000
+            Timer1.Start()
+
+        End If
 
         xtrace_sube("Form1_Load")
     End Sub
 
     '---- Initialize after form display ----
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        xtrace_subs("Timer1_Tick (Init part 2)")
+        xtrace_subs("Timer1_Tick")
 
         Timer1.Stop()
-
-
-        'CreateNewButton(0)
-        'CreateNewButton(1)
+        InstallMe()
+        wait(1)
+        exit_program()
 
         xtrace_sube("Timer1_Tick")
     End Sub
@@ -148,4 +154,9 @@ Public Class Form1
         Me.Hide()
     End Sub
 
+    Private Sub ToolStripInstallMe_Click(sender As Object, e As EventArgs) Handles ToolStripInstallMe.Click
+        xtrace_subs("ToolStripInstallMe_Click")
+        ElevateMe()
+        xtrace_sube("ToolStripInstallMe_Click")
+    End Sub
 End Class

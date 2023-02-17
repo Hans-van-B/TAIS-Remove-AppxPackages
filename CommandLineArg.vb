@@ -1,5 +1,6 @@
 ﻿Module CommandLineArg
-    'Has Async higer priority as the defaults
+    'Has higer priority as the defaults
+    Public InstallMode As Boolean = False
     Sub Read_Command_Line_Arg()
         xtrace_subs("Read_Command_Line_Arg")
 
@@ -24,10 +25,6 @@
                     ValS = Mid(SwName, P1 + 1)
                     xtrace_i("Name = " & Name & ", Val = " & ValS)
 
-                    If Name = "??" Then
-
-                    End If
-
                     Continue For
                 End If
 
@@ -40,6 +37,11 @@
                 If SwName = "xhelp" Then
                     ShowHelp()
                     ExitProgram = True
+                End If
+
+                If SwName = "install" Then
+                    InstallMode = True
+                    xtrace_i("InstallMode = True")
                 End If
 
                 Continue For

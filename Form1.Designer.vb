@@ -26,6 +26,7 @@ Partial Class Form1
         Me.TextBoxInfo = New System.Windows.Forms.TextBox()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripInstallMe = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -34,9 +35,9 @@ Partial Class Form1
         Me.HelpToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.BtnStart = New System.Windows.Forms.Button()
         Me.BtnTemplate = New System.Windows.Forms.Button()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.BtnStart = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -69,16 +70,22 @@ Partial Class Form1
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripInstallMe, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
-        Me.FileToolStripMenuItem.Text = "File"
+        Me.FileToolStripMenuItem.Text = "&File"
+        '
+        'ToolStripInstallMe
+        '
+        Me.ToolStripInstallMe.Name = "ToolStripInstallMe"
+        Me.ToolStripInstallMe.Size = New System.Drawing.Size(180, 22)
+        Me.ToolStripInstallMe.Text = "&Install Me"
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(93, 22)
-        Me.ExitToolStripMenuItem.Text = "Exit"
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ExitToolStripMenuItem.Text = "&Exit"
         '
         'SettingsToolStripMenuItem
         '
@@ -143,22 +150,6 @@ Partial Class Form1
         Me.SplitContainer1.SplitterWidth = 6
         Me.SplitContainer1.TabIndex = 3
         '
-        'BtnTemplate
-        '
-        Me.BtnTemplate.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnTemplate.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnTemplate.Location = New System.Drawing.Point(7, 47)
-        Me.BtnTemplate.Name = "BtnTemplate"
-        Me.BtnTemplate.Size = New System.Drawing.Size(319, 27)
-        Me.BtnTemplate.TabIndex = 3
-        Me.BtnTemplate.Text = "Button1"
-        Me.BtnTemplate.UseVisualStyleBackColor = True
-        Me.BtnTemplate.Visible = False
-        '
-        'Timer1
-        '
-        '
         'BtnStart
         '
         Me.BtnStart.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -168,6 +159,22 @@ Partial Class Form1
         Me.BtnStart.TabIndex = 0
         Me.BtnStart.Text = "Start"
         Me.BtnStart.UseVisualStyleBackColor = True
+        '
+        'BtnTemplate
+        '
+        Me.BtnTemplate.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnTemplate.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnTemplate.Location = New System.Drawing.Point(7, 47)
+        Me.BtnTemplate.Name = "BtnTemplate"
+        Me.BtnTemplate.Size = New System.Drawing.Size(315, 27)
+        Me.BtnTemplate.TabIndex = 3
+        Me.BtnTemplate.Text = "Button1"
+        Me.BtnTemplate.UseVisualStyleBackColor = True
+        Me.BtnTemplate.Visible = False
+        '
+        'Timer1
+        '
         '
         'Form1
         '
@@ -204,4 +211,5 @@ Partial Class Form1
     Friend WithEvents BtnTemplate As Button
     Friend WithEvents Timer1 As Timer
     Friend WithEvents BtnStart As Button
+    Friend WithEvents ToolStripInstallMe As ToolStripMenuItem
 End Class

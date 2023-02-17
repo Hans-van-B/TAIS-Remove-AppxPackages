@@ -3,11 +3,16 @@
     Dim LTrace As Integer = 2
     Dim G_TL_Sub As Integer = 2  ' Trace level for Subroutines
     Public LogFile As String = Temp & "\" & AppName & ".log"
+    Dim LogStatus As Integer = 0
 
     Sub xtrace_init()
+        InitTemp()
+
         ' Show the command-line string at the top of the log file
         My.Computer.FileSystem.WriteAllText(LogFile, Environment.CommandLine & vbNewLine, False)
+        FlushLogCashe()
         My.Computer.FileSystem.WriteAllText(LogFile, "xtrace_init" & vbNewLine, True)
+        LogStatus = 1
     End Sub
 
     Sub xtrace_header()
@@ -18,12 +23,17 @@
         xtrace_i("AppRoot = " & AppRoot)
         xtrace_i("Log level to logfile = " & LTrace.ToString, 2)
         xtrace_sube("xtrace_header")
+        LogStatus = 2
     End Sub
 
     '---- xtrace ----
     Sub xtrace_root(Msg As String, TV As Integer)
         Dim Nr As Int16
         Dim Tab As String = ""
+        If LogStatus < 1 Then
+            WriteLogCache(Msg)
+            Exit Sub
+        End If
 
         ' If subroutines are Not logged then tabbing is also disabeled
         If LTrace >= G_TL_Sub Then
@@ -80,6 +90,19 @@
     Public Sub WriteInfo(Msg)
         Form1.TextBoxInfo.AppendText(Msg & vbNewLine)
         xtrace(Msg)
+    End Sub
+
+    '=================================================================
+    Dim LogCache As New List(Of String)
+    Sub WriteLogCache(Msg)
+        LogCache.Add(Msg)
+    End Sub
+
+    Sub FlushLogCashe()
+        Dim Msg As String
+        For Each Msg In LogCache
+            My.Computer.FileSystem.WriteAllText(LogFile, Msg & vbNewLine, True)
+        Next
     End Sub
 
 End Module
