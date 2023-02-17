@@ -1,6 +1,8 @@
 ﻿Imports System.Windows.Forms
 Public Class Form1
-    Dim Buttons() As Button
+    Public Shared MaxButton As Integer = 500
+    Public Shared Buttons(MaxButton) As Button
+    Public Shared BTitles(MaxButton) As String
 
     '---- Initialize application ----------------------------------------------
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -35,21 +37,26 @@ Public Class Form1
     '---- Start ----
     Private Sub BtnStart_Click(sender As Object, e As EventArgs) Handles BtnStart.Click
         PS_Get_AppxPackage()
+
+        BtnStart.Enabled = False
         Dim Nr As Integer = 0
 
-        Dim Hdr As Boolean = True
         For Each Title As String In AppxPackage_list
-            If Title.Length < 2 Then Continue For
-            If Title.Contains("----") Then
-                Hdr = False
+            If Title Is Nothing Then
+                xtrace_i("<Nothing>")
                 Continue For
             End If
-            If Hdr Then Continue For
+
+            If Title.Length < 2 Then
+                xtrace_i("<Empty>")
+                Continue For
+            End If
 
             xtrace_i("Create button: " & Title)
             CreateNewButton(Nr, Title)
             Nr += 1
         Next
+        xtrace_i(Nr.ToString & " Buttons created")
     End Sub
 
     '---- CreateButton ----
@@ -77,7 +84,9 @@ Public Class Form1
         AddHandler NewButton.Click, AddressOf BtnTemplate_Click
         Controls.Add(NewButton)
         Me.SplitContainer1.Panel2.Controls.Add(NewButton)
-        'Buttons(ButtonNr) = NewButton
+
+        Buttons(ButtonNr) = NewButton
+        BTitles(ButtonNr) = Title
 
         xtrace_sube("CreateNewButton")
     End Sub
@@ -85,10 +94,16 @@ Public Class Form1
     Private Sub BtnTemplate_Click(sender As Object, e As EventArgs) Handles BtnTemplate.Click
         xtrace_subs("BtnTemplate_Click")
 
+        ' Get button text
         xtrace_i("Sender = " & sender.ToString, 3)
         Dim BtnTxt = sender.ToString
         BtnTxt = Mid(BtnTxt, InStr(BtnTxt, ",") + 8)
         xtrace_i("Button text = " & BtnTxt)
+
+        ' Show webinfo
+
+        ' Confirm delete
+        DeleteAppxPackageConfirm(BtnTxt)
 
         xtrace_sube("BtnTemplate_Click")
     End Sub

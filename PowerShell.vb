@@ -1,9 +1,11 @@
-﻿Module PowerShell
+﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Window
+
+Module PowerShell
     ' ToDo: Completely revise towards the existing procedures
     Public PS_Script_Target As String = Temp
     Public ScriptPath As String
     Public PS_Output As String
-    Public AppxPackage_list() As String
+    Public AppxPackage_list(10) As String
 
     '---- Create PowerShell Script ----
     Sub CreatePSScript(PSCmd As String)
@@ -67,10 +69,92 @@
         CreatePSScript("Get-AppxPackage -ErrorAction SilentlyContinue | select name")
         RunPS()
         Dim reader As String = My.Computer.FileSystem.ReadAllText(PS_Output, System.Text.Encoding.ASCII)
-        AppxPackage_list = Split(reader, vbNewLine)
-        xtrace_i(AppxPackage_list.Length.ToString & " Lines read")
+        Dim AppxPackage_list_tmp
+        AppxPackage_list_tmp = Split(reader, vbNewLine)
+        Dim LineCnt = AppxPackage_list_tmp.Length.ToString
+        xtrace_i(LineCnt & " Lines read")
 
+        xtrace_i("Filter")
+        Dim Hdr As Boolean = True
+        Dim Nr As Integer = 0
+        ReDim AppxPackage_list(LineCnt + 1)
+
+        For Each Title As String In AppxPackage_list_tmp
+            If Title.Length < 2 Then Continue For
+            If Title.Contains("----") Then
+                Hdr = False
+                Continue For
+            End If
+            If Hdr Then Continue For
+
+            xtrace_i("Add: " & Title)
+            AppxPackage_list(Nr) = Title.Trim
+            Nr += 1
+        Next
+        xtrace_i(Nr & " Lines Added")
+
+        xtrace_i("Sort")
+        Array.Sort(AppxPackage_list)
 
         xtrace_sube("PS_Get_AppxPackage")
+    End Sub
+
+    ' https://presearch.com/search?q=What+Is+AppxPackage+Microsoft.BioEnrollment
+
+    Sub DeleteAppxPackageConfirm(PackageName As String)
+        xtrace_subs("DeleteAppxPackageConfirm")
+
+        Dim NoWarning = {
+            "Microsoft.BioEnrollment",
+            "Microsoft.UI.Xaml.CBS",
+            "Microsoft.MicrosoftStickyNotes",
+            "Microsoft.MicrosoftSolitaireCollection",
+            "Microsoft.YourPhone",
+            "Microsoft.ZuneVideo"
+            }
+
+        Dim DontRemove = {
+            "Microsoft.DesktopAppInstaller"
+            }
+
+        Dim Rsp As MsgBoxResult
+
+        If NoWarning.Contains(PackageName) Then
+            xtrace_i("No Warning")
+            DeleteAppxPackage(PackageName)
+
+        ElseIf DontRemove.Contains(PackageName) Then
+            xtrace_i("Don't Remove")
+            'MessageBox.Show("It is better not to remove this package", "Warning not to remove", MessageBoxButtons.OK)
+            MsgBox("It is better not to remove this package", vbInformation, "Warning not to remove")
+
+        Else
+            xtrace_i("Print Warning")
+            Rsp = MsgBox("Are you sure you want to remove package" & vbNewLine & PackageName, vbYesNo Or vbCritical, "Confirm")
+            If Rsp = MsgBoxResult.Yes Then
+                xtrace_i("Accept")
+                DeleteAppxPackage(PackageName)
+            Else
+                xtrace_i("Decline")
+            End If
+        End If
+
+        xtrace_sube("DeleteAppxPackageConfirm")
+    End Sub
+
+    Sub DeleteAppxPackage(PackageName As String)
+        xtrace_subs("DeleteAppxPackage")
+
+        CreatePSScript("Get-AppxPackage " & PackageName & " | Remove-AppxPackage")
+        RunPS()
+
+        xtrace_i("Disable button")
+        For Nr As Integer = 0 To Form1.MaxButton
+            If Form1.BTitles(Nr) = PackageName Then
+                Form1.Buttons(Nr).Enabled = False
+            End If
+        Next
+
+        xtrace_sube("DeleteAppxPackage")
     End Sub
 End Module

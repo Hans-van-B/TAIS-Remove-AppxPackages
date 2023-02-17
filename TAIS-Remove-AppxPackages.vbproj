@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="PowerShell.vb" />
     <Compile Include="Util.vb" />
+    <Compile Include="WebInfo.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Form1.resx">
