@@ -168,7 +168,7 @@ Partial Class Form1
         Me.BtnTemplate.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnTemplate.Location = New System.Drawing.Point(7, 47)
         Me.BtnTemplate.Name = "BtnTemplate"
-        Me.BtnTemplate.Size = New System.Drawing.Size(313, 27)
+        Me.BtnTemplate.Size = New System.Drawing.Size(311, 27)
         Me.BtnTemplate.TabIndex = 3
         Me.BtnTemplate.Text = "Button1"
         Me.BtnTemplate.UseVisualStyleBackColor = True

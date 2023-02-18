@@ -39,7 +39,8 @@ Module Install
         With MyShortcut
             .TargetPath = MyCopy     'Specify target executable full path
             .Description = "Technical Application Installation Service Utility: " & AppName
-            .IconLocation = InstTarget & "\Installer.ico"
+            '.IconLocation = InstTarget & "\Installer.ico"
+            .IconLocation = MyCopy
             .Save()
         End With
 
