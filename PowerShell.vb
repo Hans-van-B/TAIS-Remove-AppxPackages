@@ -154,7 +154,27 @@ Module PowerShell
                 Form1.Buttons(Nr).Enabled = False
             End If
         Next
+        AppxPackageRemoveLog(PackageName)
 
         xtrace_sube("DeleteAppxPackage")
+    End Sub
+
+    Sub AppxPackageRemoveLog(PackageName As String)
+        Dim RemoveLogDir As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & "\TAIS"
+        Dim RemoveLog As String = RemoveLogDir & "\" & AppName & ".log"
+        xtrace_i("Remove log = " & RemoveLog)
+
+        If Not My.Computer.FileSystem.DirectoryExists(RemoveLogDir) Then
+            My.Computer.FileSystem.CreateDirectory(RemoveLogDir)
+        End If
+
+        If Not My.Computer.FileSystem.FileExists(RemoveLog) Then
+            My.Computer.FileSystem.WriteAllText(RemoveLog, "Please keep this information for trouble shooting" _
+                                                & vbNewLine & vbNewLine, True, System.Text.Encoding.ASCII)
+        End If
+
+        My.Computer.FileSystem.WriteAllText(RemoveLog, DateTime.Now & ";" & PackageName _
+                                                & vbNewLine, True, System.Text.Encoding.ASCII)
+
     End Sub
 End Module

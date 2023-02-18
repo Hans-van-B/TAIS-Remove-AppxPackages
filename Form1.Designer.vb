@@ -23,6 +23,7 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.TextBoxInfo = New System.Windows.Forms.TextBox()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -78,13 +79,13 @@ Partial Class Form1
         'ToolStripInstallMe
         '
         Me.ToolStripInstallMe.Name = "ToolStripInstallMe"
-        Me.ToolStripInstallMe.Size = New System.Drawing.Size(180, 22)
+        Me.ToolStripInstallMe.Size = New System.Drawing.Size(125, 22)
         Me.ToolStripInstallMe.Text = "&Install Me"
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
         Me.ExitToolStripMenuItem.Text = "&Exit"
         '
         'SettingsToolStripMenuItem
@@ -167,7 +168,7 @@ Partial Class Form1
         Me.BtnTemplate.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnTemplate.Location = New System.Drawing.Point(7, 47)
         Me.BtnTemplate.Name = "BtnTemplate"
-        Me.BtnTemplate.Size = New System.Drawing.Size(315, 27)
+        Me.BtnTemplate.Size = New System.Drawing.Size(313, 27)
         Me.BtnTemplate.TabIndex = 3
         Me.BtnTemplate.Text = "Button1"
         Me.BtnTemplate.UseVisualStyleBackColor = True
@@ -184,6 +185,7 @@ Partial Class Form1
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.TextBoxInfo)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Form1"
         Me.Text = "Form1"
